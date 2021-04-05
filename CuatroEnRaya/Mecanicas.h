@@ -8,7 +8,13 @@
 
 #ifndef MECANICAS_H_
 #define MECANICAS_H_
-
-
-
+#include "Tablero.h"
+#include <stdbool.h>
+int filaLibre(Ficha **tablero, int columna);
+bool colocarFicha(Ficha **tablero, int jugador, int columna);
+int comprobarVertical(Ficha **tablero, int columna, int fila);
+int comprobarHorizontal(Ficha **tablero, int columna, int fila);
+int comprobarDiagonalIzq(Ficha **tablero, int columna, int fila);
+int comprobarDiagonalDer(Ficha **tablero, int columna, int fila);
+int comprobarVictoria(Ficha **tablero);
 #endif /* MECANICAS_H_ */

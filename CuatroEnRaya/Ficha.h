@@ -9,6 +9,10 @@
 #ifndef FICHA_H_
 #define FICHA_H_
 
-
+typedef struct Ficha {
+	int columna;
+	int fila;
+	int tipo;
+} Ficha;
 
 #endif /* FICHA_H_ */
