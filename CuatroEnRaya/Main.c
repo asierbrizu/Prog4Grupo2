@@ -11,6 +11,7 @@
 
 int main(int argc, char **argv) {
 	printf("Asier Brizuela saluda");
+	printf("Asier Martinez saluda");
 
 	Ficha **prueba;
 	prueba = (Ficha**) malloc(7 * sizeof(Ficha*));
