@@ -8,6 +8,7 @@
 #include "Mecanicas.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char **argv) {
 	printf("Asier Brizuela saluda");
@@ -21,18 +22,17 @@ int main(int argc, char **argv) {
 	}
 	limpiar(prueba);
 
-	colocarFicha(prueba, 1, 0);
-
-	colocarFicha(prueba, 1, 1);
-	colocarFicha(prueba, 2, 2);
-	colocarFicha(prueba, 1, 3);
-	colocarFicha(prueba, 2, 3);
-
-	visualizarTablero(prueba);
-
-	printf("Ha ganado %i", comprobarVictoria(prueba));
-	limpiar(prueba);
-	visualizarTablero(prueba);
+	char opcion;
+	do {
+		opcion = menuInicio();
+		switch (opcion) {
+		case '1':
+			jugarPartida(prueba);
+			break;
+		default:
+			break;
+		}
+	} while (opcion != '9');
 
 	//Liberar tablero
 	for (i = 0; i < 7; i++) {

@@ -9,6 +9,14 @@
 #include "Mecanicas.h"
 #include <stdbool.h>
 #include <stdio.h>
+
+void clearIfNeeded(char *str, int max_line) {
+	// Limpia los caracteres de más introducidos
+	if ((strlen(str) == max_line - 1) && (str[max_line - 2] != '\n'))
+		while (getchar() != '\n')
+			;
+}
+
 int filaLibre(Ficha **tablero, int columna) {
 	int i = 0;
 	while (tablero[columna][i].tipo != 0) {
@@ -18,6 +26,7 @@ int filaLibre(Ficha **tablero, int columna) {
 }
 bool colocarFicha(Ficha **tablero, int jugador, int columna) {
 	if (filaLibre(tablero, columna) > 5) {
+		printf("\nLa columna seleccionada esta llena.\n");
 		return false;
 	}
 	tablero[columna][filaLibre(tablero, columna)].tipo = jugador;
@@ -110,12 +119,12 @@ int comprobarVictoria(Ficha **tablero) {
 				if (i == 0 || i == 6) {
 					if (comprobarVertical(tablero, i, j) > 3) {
 						//printf("\nGanador por vertical en %i %i",i,j);
-						return true;
+						return tablero[i][j].tipo;
 					}
 				} else if (j == 0 || j == 5) {
 					if (comprobarHorizontal(tablero, i, j) > 3) {
 						//printf("\nGanador por horizontal en %i %i",i,j);
-						return true;
+						return tablero[i][j].tipo;
 					}
 				} else {
 					if (comprobarHorizontal(tablero, i, j) > 3
@@ -123,13 +132,63 @@ int comprobarVictoria(Ficha **tablero) {
 							|| comprobarDiagonalDer(tablero, i, j) > 3
 							|| comprobarDiagonalIzq(tablero, i, j) > 3) {
 						//printf("\nGanador en %i %i",i,j);
-						return true;
+						return tablero[i][j].tipo;
 					}
 				}
 			}
 
 		}
 	}
-	return false;
+	return 0;
 }
 
+char menuInicio() {
+	printf("\n1. Jugar partida\n");
+	//printf("2. Mostrar listado\n");
+
+	printf("9. para salir\n");
+	printf("\n");
+	printf("Opción: ");
+	fflush(stdout);
+	char linea[2];
+	fgets(linea, 2, stdin);
+	clearIfNeeded(linea, 2);
+	return *linea;
+}
+
+void jugarPartida(Ficha **tablero) {
+	limpiar(tablero);
+	bool juegaJug1 = true;
+	int numeroJug;
+	do {
+		if (juegaJug1) {
+			numeroJug = 1;
+		} else {
+			numeroJug = 2;
+		}
+
+		int columna;
+		do {
+			if (columna < 1 || columna > 7) {
+				printf(
+				"\nEl numero de columna introducido no es valido. Vuelve a intentarlo.");
+			}
+			visualizarTablero(tablero);
+			printf("Es el turno de Jugador %i\n", numeroJug);
+			printf("En que columna quieres poner tu ficha?\n");
+			fflush(stdout);
+			char linea[2];
+			fgets(linea, 2, stdin);
+			clearIfNeeded(linea, 2);
+			columna = *linea - '0';
+			printf("Columna:%i", columna);
+		} while (columna < 1 || columna > 7);
+		if (colocarFicha(tablero, numeroJug, columna - 1)) {
+			juegaJug1 = !juegaJug1;
+		}
+	} while (comprobarVictoria(tablero) == 0);
+	visualizarTablero(tablero);
+	printf("Ha ganado el jugador %i. Felicidades!\n",
+			comprobarVictoria(tablero));
+
+}
