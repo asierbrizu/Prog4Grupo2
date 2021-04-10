@@ -11,8 +11,8 @@
 
 typedef struct Jugador {
 
-	char usuario[];
-	char contraseya[];
+	char usuario[30];
+	char contraseya[30];
 
 } Jugador;
 

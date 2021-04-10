@@ -6,6 +6,7 @@
  */
 
 #include "Mecanicas.h"
+#include "Jugador.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,7 +15,9 @@ int main(int argc, char **argv) {
 	FILE* fEscritura;
 	FILE* fLectura;
 
-	fEscritura = fopen("Usuario.txt", "w");
+	Jugador jugador;
+
+	fEscritura = fopen("Usuario.txt", "a");
 	fLectura = fopen("Datos.txt", "r");
 
 	printf("Asier Brizuela saluda");
@@ -36,17 +39,28 @@ int main(int argc, char **argv) {
 
 			printf("\nEscribe tu correo electrónico:\n");
 			char usuario[30];
-			fgets(usuario, 30, stdin);
 			fflush(stdout);
+			fgets(usuario, 30, stdin);
+
 
 			printf("\nEscribe tu contraseña:\n");
 			char contraseya[30];
-			fgets(contraseya, 30, stdin);
 			fflush(stdout);
+			fgets(contraseya, 30, stdin);
+
+			printf("\Repite tu contraseña:\n");
+			char contraseya2[30];
+			fflush(stdout);
+			fgets(contraseya2, 30, stdin);
 
 			printf("Este es tu usuario %s y esta tu contraseña %s", usuario, contraseya);
 
+			strcpy(jugador.usuario, usuario);
+			strcpy(jugador.contraseya, contraseya);
+
 			fputs(usuario, fEscritura);
+			fputs(contraseya, fEscritura);
+
 
 			char opcion;
 				do {
