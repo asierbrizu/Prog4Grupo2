@@ -11,7 +11,6 @@
 #include <stdio.h>
 
 void clearIfNeeded(char *str, int max_line) {
-	// Limpia los caracteres de más introducidos
 	if ((strlen(str) == max_line - 1) && (str[max_line - 2] != '\n'))
 		while (getchar() != '\n')
 			;
@@ -54,8 +53,6 @@ int comprobarHorizontal(Ficha **tablero, int columna, int fila) {
 	int jugador = tablero[columna][fila].tipo;
 	int izquierda = 0;
 	int derecha = 0;
-	//printf("\nColumna: %i. Izquieda: %i Resultado: %i",columna,izquierda,columna - 1 - izquierda);
-	//printf("Tipo %i",tablero[columna - 1 - izquierda][fila].tipo);
 	while (tablero[columna - 1 - izquierda][fila].tipo == jugador) {
 		izquierda++;
 		if (columna - 1 - izquierda < 0) {
@@ -81,7 +78,7 @@ int comprobarDiagonalIzq(Ficha **tablero, int columna, int fila) {
 			break;
 		}
 	}
-	while (tablero[columna + abajo + 1][fila - 1 - abajo].tipo == jugador) {
+	while (tablero[columna + abajo + 1][fila + 1 + abajo].tipo == jugador) {
 		abajo++;
 		if (columna + arriba + 1 > 6 || fila + 1 + arriba > 5) {
 			break;
@@ -144,7 +141,6 @@ int comprobarVictoria(Ficha **tablero) {
 
 char menuInicio() {
 	printf("\n1. Jugar partida\n");
-	//printf("2. Mostrar listado\n");
 
 	printf("9. para salir\n");
 	printf("\n");
@@ -171,7 +167,7 @@ void jugarPartida(Ficha **tablero) {
 		do {
 			if (columna < 1 || columna > 7) {
 				printf(
-				"\nEl numero de columna introducido no es valido. Vuelve a intentarlo.");
+						"\nEl numero de columna introducido no es valido. Vuelve a intentarlo.");
 			}
 			visualizarTablero(tablero);
 			printf("Es el turno de Jugador %i\n", numeroJug);
@@ -181,7 +177,6 @@ void jugarPartida(Ficha **tablero) {
 			fgets(linea, 2, stdin);
 			clearIfNeeded(linea, 2);
 			columna = *linea - '0';
-			printf("Columna:%i", columna);
 		} while (columna < 1 || columna > 7);
 		if (colocarFicha(tablero, numeroJug, columna - 1)) {
 			juegaJug1 = !juegaJug1;
