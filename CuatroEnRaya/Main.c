@@ -53,6 +53,17 @@ int main(int argc, char **argv) {
 			fflush(stdout);
 			fgets(contraseya2, 30, stdin);
 
+			while(strcmp(contraseya, contraseya2) != 0){
+
+							printf("\nEscribe tu contraseña:\n");
+							fflush(stdout);
+							fgets(contraseya, 30, stdin);
+
+							printf("\Repite tu contraseña:\n");
+							fflush(stdout);
+							fgets(contraseya2, 30, stdin);
+						}
+
 			printf("Este es tu usuario %s y esta tu contraseña %s", usuario, contraseya);
 
 			strcpy(jugador.usuario, usuario);
