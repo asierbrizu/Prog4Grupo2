@@ -9,6 +9,11 @@
 #ifndef JUGADOR_H_
 #define JUGADOR_H_
 
+typedef struct Jugador {
 
+	char usuario[];
+	char contraseya[];
+
+} Jugador;
 
 #endif /* JUGADOR_H_ */

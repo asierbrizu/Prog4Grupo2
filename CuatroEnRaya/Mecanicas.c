@@ -139,6 +139,19 @@ int comprobarVictoria(Ficha **tablero) {
 	return 0;
 }
 
+char inicioSesion(){
+	printf("\n1. Registrarse\n");
+	//printf("\n2. Iniciar sesión\n");
+	printf("\n9. Salir\n");
+	printf("\n");
+	printf("Opción: ");
+	fflush(stdout);
+	char linea[2];
+	fgets(linea, 2, stdin);
+	clearIfNeeded(linea, 2);
+	return *linea;
+}
+
 char menuInicio() {
 	printf("\n1. Jugar partida\n");
 

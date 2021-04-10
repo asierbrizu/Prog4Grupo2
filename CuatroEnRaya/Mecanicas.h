@@ -21,6 +21,7 @@ int comprobarDiagonalIzq(Ficha **tablero, int columna, int fila);
 int comprobarDiagonalDer(Ficha **tablero, int columna, int fila);
 int comprobarVictoria(Ficha **tablero);
 char menuInicio();
+char inicioSesion();
 void clearIfNeeded(char *str, int max_line);
 void jugarPartida(Ficha **tablero);
 #endif /* MECANICAS_H_ */
