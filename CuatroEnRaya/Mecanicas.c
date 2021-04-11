@@ -154,6 +154,7 @@ char inicioSesion(){
 
 char menuInicio() {
 	printf("\n1. Jugar partida\n");
+	printf("2. Ver estadisticas\n");
 
 	printf("9. para salir\n");
 	printf("\n");

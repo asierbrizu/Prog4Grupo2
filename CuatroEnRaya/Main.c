@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
 			fflush(stdout);
 			fgets(contraseya, 30, stdin);
 
-			printf("\Repite tu contraseña:\n");
+			printf("\nRepite tu contraseña:\n");
 			char contraseya2[30];
 			fflush(stdout);
 			fgets(contraseya2, 30, stdin);
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 							fflush(stdout);
 							fgets(contraseya, 30, stdin);
 
-							printf("\Repite tu contraseña:\n");
+							printf("\nRepite tu contraseña:\n");
 							fflush(stdout);
 							fgets(contraseya2, 30, stdin);
 						}
@@ -80,6 +80,19 @@ int main(int argc, char **argv) {
 					case '1':
 						jugarPartida(prueba);
 						break;
+					case '2':
+
+						printf("\nAhora se mostraran las estadisticas:\n");
+
+						if(fLectura == NULL){
+						printf("nError opening file.nExiting program.n");
+						}
+						char estadistic[60];
+						while(fgets(estadistic, 100, fLectura) != NULL){
+							printf("%s", estadistic);
+						}
+
+						break;
 					default:
 						break;
 					}
@@ -92,13 +105,6 @@ int main(int argc, char **argv) {
 					free(prueba);
 			break;
 
-		/*case '2':
-
-			while(){
-
-			}
-
-			break;*/
 		default:
 			break;
 		}
