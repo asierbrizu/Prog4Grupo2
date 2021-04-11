@@ -12,36 +12,32 @@
 #include <string.h>
 
 int main(int argc, char **argv) {
-	FILE* fEscritura;
-	FILE* fLectura;
+	FILE *fEscritura;
+	FILE *fLectura;
 
 	Jugador jugador;
 
 	fEscritura = fopen("Usuario.txt", "a");
 	fLectura = fopen("Datos.txt", "r");
 
-	printf("Asier Brizuela saluda");
-	printf("\nAsier Martinez saluda\n");
-
-	Ficha **prueba;
-	prueba = (Ficha**) malloc(7 * sizeof(Ficha*));
+	Ficha **tablero;
+	tablero = (Ficha**) malloc(7 * sizeof(Ficha*));
 	int i;
 	for (i = 0; i < 7; ++i) {
-		prueba[i] = (Ficha*) malloc(6 * sizeof(Ficha));
+		tablero[i] = (Ficha*) malloc(6 * sizeof(Ficha));
 	}
-	limpiar(prueba);
+	limpiar(tablero);
 	char sesion;
 
-	do{
+	do {
 		sesion = inicioSesion();
-		switch(sesion) {
+		switch (sesion) {
 		case '1':
 
 			printf("\nEscribe tu correo electrónico:\n");
 			char usuario[30];
 			fflush(stdout);
 			fgets(usuario, 30, stdin);
-
 
 			printf("\nEscribe tu contraseña:\n");
 			char contraseya[30];
@@ -53,18 +49,19 @@ int main(int argc, char **argv) {
 			fflush(stdout);
 			fgets(contraseya2, 30, stdin);
 
-			while(strcmp(contraseya, contraseya2) != 0){
+			while (strcmp(contraseya, contraseya2) != 0) {
 
-							printf("\nEscribe tu contraseña:\n");
-							fflush(stdout);
-							fgets(contraseya, 30, stdin);
+				printf("\nEscribe tu contraseña:\n");
+				fflush(stdout);
+				fgets(contraseya, 30, stdin);
 
-							printf("\nRepite tu contraseña:\n");
-							fflush(stdout);
-							fgets(contraseya2, 30, stdin);
-						}
+				printf("\nRepite tu contraseña:\n");
+				fflush(stdout);
+				fgets(contraseya2, 30, stdin);
+			}
 
-			printf("Este es tu usuario %s y esta tu contraseña %s", usuario, contraseya);
+			printf("Este es tu usuario %s y esta tu contraseña %s", usuario,
+					contraseya);
 
 			strcpy(jugador.usuario, usuario);
 			strcpy(jugador.contraseya, contraseya);
@@ -72,47 +69,45 @@ int main(int argc, char **argv) {
 			fputs(usuario, fEscritura);
 			fputs(contraseya, fEscritura);
 
-
 			char opcion;
-				do {
-					opcion = menuInicio();
-					switch (opcion) {
-					case '1':
-						jugarPartida(prueba);
-						break;
-					case '2':
+			do {
+				opcion = menuInicio();
+				switch (opcion) {
+				case '1':
+					jugarPartida(tablero);
+					break;
+				case '2':
 
-						printf("\nAhora se mostraran las estadisticas:\n");
+					printf("\nAhora se mostraran las estadisticas:\n");
 
-						if(fLectura == NULL){
+					if (fLectura == NULL) {
 						printf("nError opening file.nExiting program.n");
-						}
-						char estadistic[60];
-						while(fgets(estadistic, 100, fLectura) != NULL){
-							printf("%s", estadistic);
-						}
-
-						break;
-					default:
-						break;
 					}
-				} while (opcion != '9');
-
-				//Liberar tablero
-					for (i = 0; i < 7; i++) {
-						free(prueba[i]);
+					char estadistic[60];
+					while (fgets(estadistic, 100, fLectura) != NULL) {
+						printf("%s", estadistic);
 					}
-					free(prueba);
+
+					break;
+				default:
+					break;
+				}
+			} while (opcion != '9');
+
+			//Liberar tablero
+			for (i = 0; i < 7; i++) {
+				free(tablero[i]);
+			}
+			free(tablero);
 			break;
 
 		default:
 			break;
 		}
-	} while(sesion != '9');
+	} while (sesion != '9');
 
 	fclose(fEscritura);
 	fclose(fLectura);
-
 
 }
 

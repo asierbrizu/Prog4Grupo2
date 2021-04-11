@@ -156,7 +156,7 @@ char menuInicio() {
 	printf("\n1. Jugar partida\n");
 	printf("2. Ver estadisticas\n");
 
-	printf("9. para salir\n");
+	printf("9. Para salir\n");
 	printf("\n");
 	printf("Opción: ");
 	fflush(stdout);
