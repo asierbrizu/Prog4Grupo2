@@ -9,10 +9,17 @@
 #ifndef FICHA_H_
 #define FICHA_H_
 
-typedef struct Ficha {
-	int columna;
-	int fila;
-	int tipo;
-} Ficha;
+class Ficha{
+private:
+		int tipo;
+public:
+		Ficha(int tipo);
+		~Ficha();
+
+		int getTipo();
+		void setTipo(int tipo);
+};
+
+
 
 #endif /* FICHA_H_ */

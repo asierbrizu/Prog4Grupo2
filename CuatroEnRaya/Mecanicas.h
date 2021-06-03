@@ -9,6 +9,8 @@
 #ifndef MECANICAS_H_
 #define MECANICAS_H_
 #include "Tablero.h"
+#include <iostream>
+using namespace std;
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

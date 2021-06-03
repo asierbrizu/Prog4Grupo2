@@ -2,14 +2,11 @@
  * Main.c
  *
  *  Created on: 4 abr. 2021
- *      Author: Asier
+ *      Author: Asier Brizuela
  */
 
-extern "C" {
 #include "Mecanicas.h"
 #include "Jugador.h"
-#include "Tablero.h"
-};
 #include <iostream>
 using namespace std;
 
@@ -17,7 +14,6 @@ int main(int argc, char **argv) {
 
 
 	Jugador jugador;
-
 
 	Ficha **tablero;
 	tablero = (Ficha**) malloc(7 * sizeof(Ficha*));
@@ -67,8 +63,9 @@ int main(int argc, char **argv) {
 
 
 			cout<<"Este es tu usuario "<<usuario<<" y esta es tu contraseña "<<contraseya<<".";
-			strcpy(jugador.usuario, usuario);
-			strcpy(jugador.contraseya, contraseya);
+
+			jugador.setEMail(usuario);
+			jugador.setContrasenya(contraseya);
 
 			//Aqui hay que crear el usuario en la Base de Datos
 
@@ -79,7 +76,23 @@ int main(int argc, char **argv) {
 				opcion = menuInicio();
 				switch (opcion) {
 				case '1':
-					jugarPartida(tablero);
+
+					cout<<"Contra quien quieres jugar?"<<endl;
+					cout<<"1. Contra otro jugador."<<endl;
+					cout<<"2. Contra la IA."<<endl;
+					char opcionOponente;
+					cin>>opcionOponente;
+
+					switch(opcionOponente){
+					case '1':
+						jugarPartida(tablero);
+						break;
+					}
+
+
+
+
+
 					break;
 				case '2':
 
@@ -100,7 +113,7 @@ int main(int argc, char **argv) {
 			free(tablero);
 			break;
 		case '2':
-			//Aqui hay que iniciar sesión
+			//Aqui hay que iniciar sesión (y crear una)
 			break;
 		default:
 			break;

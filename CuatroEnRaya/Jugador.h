@@ -9,11 +9,20 @@
 #ifndef JUGADOR_H_
 #define JUGADOR_H_
 
-typedef struct Jugador {
+class Jugador{
+private:
+	char *email;
+	char *contraseya;
+public:
+	Jugador();
+	Jugador(char *email,char *contrasenya);
+	~Jugador();
 
-	char usuario[30];
-	char contraseya[30];
+	char *getEMail();
+	char *getContrasenya();
 
-} Jugador;
+	void setEMail(char *mail);
+	void setContrasenya(char *contra);
+};
 
 #endif /* JUGADOR_H_ */

@@ -6,7 +6,6 @@
  *      En este fichero se programara todas las características del tablero..
  */
 #include "Tablero.h"
-#include "Ficha.h"
 #include <stdio.h>
 #define SIMBOLO1 'O';
 #define SIMBOLO2 'X';
@@ -32,7 +31,7 @@ void visualizarTablero(Ficha **tablero) {
 		int i;
 		printf("|");
 		for (i = 0; i <= 6; i++) {
-			printf("%c|", obtenerSimbolo(tablero[i][j].tipo));
+			printf("%c|", obtenerSimbolo(tablero[i][j].getTipo()));
 		}
 		printf("\n");
 	}
@@ -44,7 +43,7 @@ void limpiar(Ficha **tablero) {
 	for (i = 0; i < 7; i++) {
 		int j;
 		for (j = 0; j < 6; ++j) {
-			tablero[i][j].tipo = 0;
+			tablero[i][j].setTipo(0);
 		}
 	}
 }
