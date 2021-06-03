@@ -6,7 +6,9 @@
  */
 
 #include "Ficha.h"
-
+Ficha::Ficha(){
+this->tipo=0;
+}
 Ficha::Ficha(int tipo){
 this->tipo=tipo;
 }

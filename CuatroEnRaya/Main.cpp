@@ -15,11 +15,10 @@ int main(int argc, char **argv) {
 
 	Jugador jugador;
 
-	Ficha **tablero;
-	tablero = (Ficha**) malloc(7 * sizeof(Ficha*));
+	Ficha **tablero=new Ficha*[COLUMNAS];
 	int i;
-	for (i = 0; i < 7; ++i) {
-		tablero[i] = (Ficha*) malloc(6 * sizeof(Ficha));
+	for (i = 0; i < COLUMNAS; ++i) {
+		tablero[i]=new Ficha[FILAS];
 	}
 	limpiar(tablero);
 	char sesion;
@@ -85,8 +84,14 @@ int main(int argc, char **argv) {
 
 					switch(opcionOponente){
 					case '1':
-						jugarPartida(tablero);
+						//Se pide que el jugador 2 inicie sesión
+						jugarPartida(tablero,false);//Pendiente cambiar parametros para recibir dos usuarios
 						break;
+
+					case '2':
+
+											jugarPartida(tablero,true);//Pendiente cambiar parametros para recibir dos usuarios (el segundo la IA)
+											break;
 					}
 
 
@@ -107,10 +112,11 @@ int main(int argc, char **argv) {
 			} while (opcion != '9');
 
 			//Liberar tablero
-			for (i = 0; i < 7; i++) {
-				free(tablero[i]);
+			for (i = 0; i < COLUMNAS; i++) {
+				delete[] tablero[i];
 			}
-			free(tablero);
+			delete[] tablero;
+
 			break;
 		case '2':
 			//Aqui hay que iniciar sesión (y crear una)

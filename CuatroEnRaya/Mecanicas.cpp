@@ -10,6 +10,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "IA.h"
+
+
 
 int filaLibre(Ficha **tablero, int columna) {
 	int i = 0;
@@ -19,7 +22,7 @@ int filaLibre(Ficha **tablero, int columna) {
 	return i;
 }
 bool colocarFicha(Ficha **tablero, int jugador, int columna) {
-	if (filaLibre(tablero, columna) > 5) {
+	if (filaLibre(tablero, columna) > FILAS-1) {
 		return false;
 	}
 	tablero[columna][filaLibre(tablero, columna)].setTipo(jugador);
@@ -37,7 +40,7 @@ int comprobarVertical(Ficha **tablero, int columna, int fila) {
 	}
 	while (tablero[columna][fila + 1 + abajo].getTipo() == jugador) {
 		abajo++;
-		if (fila + 1 + abajo > 5) {
+		if (fila + 1 + abajo > FILAS-1) {
 			break;
 		}
 	}
@@ -55,7 +58,7 @@ int comprobarHorizontal(Ficha **tablero, int columna, int fila) {
 	}
 	while (tablero[columna + 1 + derecha][fila].getTipo() == jugador) {
 		derecha++;
-		if (columna + 1 + derecha > 6) {
+		if (columna + 1 + derecha > COLUMNAS-1) {
 			break;
 		}
 	}
@@ -74,7 +77,7 @@ int comprobarDiagonalIzq(Ficha **tablero, int columna, int fila) {
 	}
 	while (tablero[columna + abajo + 1][fila + 1 + abajo].getTipo() == jugador) {
 		abajo++;
-		if (columna + abajo + 1 > 6 || fila + 1 + abajo > 5) {
+		if (columna + abajo + 1 > COLUMNAS-1 || fila + 1 + abajo > FILAS-1) {
 			break;
 		}
 	}
@@ -86,40 +89,40 @@ int comprobarDiagonalDer(Ficha **tablero, int columna, int fila) {
 	int abajo = 0;
 	while (tablero[columna + 1 + arriba][fila - 1 - arriba].getTipo() == jugador) {
 		arriba++;
-		if (columna + arriba + 1 > 6 || fila - 1 - arriba < 0) {
+		if (columna + arriba + 1 > COLUMNAS-1 || fila - 1 - arriba < 0) {
 			break;
 		}
 	}
 	while (tablero[columna - 1 - abajo][fila + 1 + abajo].getTipo() == jugador) {
 		abajo++;
-		if (columna - abajo - 1 < 0 || fila + 1 + abajo > 5) {
+		if (columna - abajo - 1 < 0 || fila + 1 + abajo > FILAS-1) {
 			break;
 		}
 	}
 	return 1 + arriba + abajo;
 }
 
-int comprobarVictoria(Ficha **tablero) {
+int comprobarVictoria(Ficha **tablero,int objetivo) {
 	int i;
-	for (i = 0; i < 7; i++) {
+	for (i = 0; i < COLUMNAS; i++) {
 		int j;
-		for (j = 0; j < 6; ++j) {
-			if (!((i == 0 && (j == 0 || j == 5))
-					|| (i == 6 && (j == 0 || j == 5)))
+		for (j = 0; j < FILAS; ++j) {
+			if (!((i == 0 && (j == 0 || j == FILAS-1))
+					|| (i == COLUMNAS-1 && (j == 0 || j == FILAS-1)))
 					&& tablero[i][j].getTipo() != 0) {
-				if (i == 0 || i == 6) {
-					if (comprobarVertical(tablero, i, j) > 3) {
+				if (i == 0 || i == COLUMNAS-1) {
+					if (comprobarVertical(tablero, i, j) > objetivo-1) {
 						return tablero[i][j].getTipo();
 					}
-				} else if (j == 0 || j == 5) {
-					if (comprobarHorizontal(tablero, i, j) > 3) {
+				} else if (j == 0 || j == FILAS-1) {
+					if (comprobarHorizontal(tablero, i, j) > objetivo-1) {
 						return tablero[i][j].getTipo();
 					}
 				} else {
-					if (comprobarHorizontal(tablero, i, j) > 3
-							|| comprobarVertical(tablero, i, j) > 3
-							|| comprobarDiagonalDer(tablero, i, j) > 3
-							|| comprobarDiagonalIzq(tablero, i, j) > 3) {
+					if (comprobarHorizontal(tablero, i, j) > objetivo-1
+							|| comprobarVertical(tablero, i, j) > objetivo-1
+							|| comprobarDiagonalDer(tablero, i, j) > objetivo-1
+							|| comprobarDiagonalIzq(tablero, i, j) > objetivo-1) {
 						return tablero[i][j].getTipo();
 					}
 				}
@@ -128,6 +131,38 @@ int comprobarVictoria(Ficha **tablero) {
 		}
 	}
 	return 0;
+}
+
+int numeroDeVictorias(Ficha **tablero,int objetivo) {
+	int n=0;
+	int i;
+	for (i = 0; i < COLUMNAS; i++) {
+		int j;
+		for (j = 0; j < FILAS; ++j) {
+			if (!((i == 0 && (j == 0 || j == FILAS-1))
+					|| (i == COLUMNAS-1 && (j == 0 || j == FILAS-1)))
+					&& tablero[i][j].getTipo() != 0) {
+				if (i == 0 || i == COLUMNAS-1) {
+					if (comprobarVertical(tablero, i, j) > objetivo-1) {
+						n++;
+					}
+				} else if (j == 0 || j == FILAS-1) {
+					if (comprobarHorizontal(tablero, i, j) > objetivo-1) {
+						n++;
+					}
+				} else {
+					if (comprobarHorizontal(tablero, i, j) > objetivo-1
+							|| comprobarVertical(tablero, i, j) > objetivo-1
+							|| comprobarDiagonalDer(tablero, i, j) > objetivo-1
+							|| comprobarDiagonalIzq(tablero, i, j) > objetivo-1) {
+						n++;
+					}
+				}
+			}
+
+		}
+	}
+	return n;
 }
 
 char inicioSesion(){
@@ -157,10 +192,22 @@ char menuInicio() {
 	return *linea;
 }
 
-void jugarPartida(Ficha **tablero) {
+
+bool empate(Ficha **tablero){
+	for(int n=0;n<COLUMNAS;n++) {
+				if (filaLibre(tablero, n)<FILAS) {
+					return false;
+				}
+			}
+	return true;
+}
+
+void jugarPartida(Ficha **tablero, bool contraIA) {
 	limpiar(tablero);
 	bool juegaJug1 = true;
 	int numeroJug;
+	//bool contraIA=false;
+	//contraIA=jugador2==IA;Hacer cuando cambiemos los parametros recibidos
 	do {
 
 		if (juegaJug1) {
@@ -169,25 +216,43 @@ void jugarPartida(Ficha **tablero) {
 			numeroJug = 2;
 		}
 		int columna;
-		do {
-			if (columna < 1 || columna > 7) {
-				cout<<"\nEl numero de columna introducido no es valido. Vuelve a intentarlo."<<endl;
+		if (!contraIA||juegaJug1) {
+			do {
+				if (columna < 1 || columna > COLUMNAS) {
+					cout<<"\nEl numero de columna introducido no es valido. Vuelve a intentarlo."<<endl;
+				}
+
+				visualizarTablero(tablero);
+
+				cout<<"Es el turno de Jugador "<<numeroJug<<"\n"<<endl;
+				cout<<"En que columna quieres poner tu ficha?\n"<<endl;
+
+				//char linea[2];
+				cin>>columna;
+				//columna = *linea - '0';
+
+			} while (columna < 1 || columna > COLUMNAS);
+
+			if (colocarFicha(tablero, numeroJug, columna - 1)) {
+
+				juegaJug1 = !juegaJug1;
 			}
-
-			visualizarTablero(tablero);
-
-			cout<<"Es el turno de Jugador "<<numeroJug<<"\n"<<endl;
-			cout<<"En que columna quieres poner tu ficha?\n"<<endl;
-
-			char linea[2];
-			cin>>linea;
-			columna = *linea - '0';
-		} while (columna < 1 || columna > 7);
-		if (colocarFicha(tablero, numeroJug, columna - 1)) {
+		}else{
+			//JuegaIA
+			int colocado=eleccionIA(tablero);
+			colocarFicha(tablero,numeroJug,colocado);
+			cout<<"La IA ha coloca en la columna "<<colocado<<"."<<endl;
 			juegaJug1 = !juegaJug1;
 		}
-	} while (comprobarVictoria(tablero) == 0);
+
+	} while (comprobarVictoria(tablero,OBJETIVO) == 0&&!empate(tablero));
 	visualizarTablero(tablero);
-	cout<<"Ha ganado el jugador "<<comprobarVictoria(tablero)<<". Felicidades!\n"<<endl;
+	if (!empate(tablero)) {
+		cout<<"Ha ganado el jugador "<<comprobarVictoria(tablero,OBJETIVO)<<". Felicidades!\n"<<endl;
+	} else{
+		cout<<"Habeis empatado."<<endl;
+	}
+
+	//Mostrar nickname de jugador ganador
 //Aqui hay que actualizar las estadisticas de las BDs
 }

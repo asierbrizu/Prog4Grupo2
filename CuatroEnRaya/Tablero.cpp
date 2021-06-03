@@ -6,9 +6,8 @@
  *      En este fichero se programara todas las características del tablero..
  */
 #include "Tablero.h"
-#include <stdio.h>
-#define SIMBOLO1 'O';
-#define SIMBOLO2 'X';
+#include <iostream>
+using namespace std;
 
 char obtenerSimbolo(int num) {
 	switch (num) {
@@ -25,24 +24,34 @@ char obtenerSimbolo(int num) {
 }
 
 void visualizarTablero(Ficha **tablero) {
-	printf("\n---------------\n");
-	int j;
-	for (j = 5; j >= 0; j--) {
-		int i;
-		printf("|");
-		for (i = 0; i <= 6; i++) {
-			printf("%c|", obtenerSimbolo(tablero[i][j].getTipo()));
-		}
-		printf("\n");
+	for(int n=0;n<COLUMNAS*2 +1;n++){
+		cout<<"-";
 	}
-	printf("---------------\n");
+	cout<<endl;
+	for(int n=0;n<COLUMNAS;n++){
+			cout<<" "<<n+1;
+		}
+		cout<<endl;
+	int j;
+	for (j = FILAS-1; j >= 0; j--) {
+		int i;
+		cout<<"|";
+		for (i = 0; i <= COLUMNAS-1; i++) {
+			cout<<obtenerSimbolo(tablero[i][j].getTipo())<<"|";
+		}
+		cout<<endl;
+	}
+	for(int n=0;n<COLUMNAS*2 +1;n++){
+			cout<<"-";
+		}
+		cout<<endl;
 }
 
 void limpiar(Ficha **tablero) {
 	int i;
-	for (i = 0; i < 7; i++) {
+	for (i = 0; i < COLUMNAS; i++) {
 		int j;
-		for (j = 0; j < 6; ++j) {
+		for (j = 0; j < FILAS; ++j) {
 			tablero[i][j].setTipo(0);
 		}
 	}

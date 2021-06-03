@@ -13,6 +13,7 @@ class Ficha{
 private:
 		int tipo;
 public:
+		Ficha();
 		Ficha(int tipo);
 		~Ficha();
 
