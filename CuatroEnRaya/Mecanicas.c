@@ -199,5 +199,5 @@ void jugarPartida(Ficha **tablero) {
 	visualizarTablero(tablero);
 	printf("Ha ganado el jugador %i. Felicidades!\n",
 			comprobarVictoria(tablero));
-
+//Aqui hay que actualizar las estadisticas de las BDs
 }
