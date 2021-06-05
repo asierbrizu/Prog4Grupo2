@@ -4,7 +4,6 @@
  *  Created on: 3 jun. 2021
  *      Author: Asier Brizuela
  */
-
 #include "IA.h"
 #include <time.h>
 
@@ -80,7 +79,8 @@ int eleccionIA(Ficha **tablero) {
 		if (numeroDeVictorias(posibilidad, OBJETIVO - 1)
 				> numeroDeVictorias(tablero, OBJETIVO - 1)
 				&& !comprobrobarVictoriaInminente(posibilidad, 1, OBJETIVO)
-				&& comprobrobarVictoriaInminente(posibilidad, 2, OBJETIVO)) {
+				&& comprobrobarVictoriaInminente(posibilidad, 2, OBJETIVO)
+				&& !existePeligro(tablero, n)) {
 			seRealiza = true;
 			jugada = n;
 		}
@@ -104,7 +104,8 @@ int eleccionIA(Ficha **tablero) {
 
 		if (masAlineaciones
 				&& !comprobrobarVictoriaInminente(posibilidad, 1, OBJETIVO)
-				&& !derrotaProxima(tablero, n)) {
+				&& !derrotaProxima(tablero, n)
+				&& !existePeligro(tablero, n)) {
 			seRealiza = true;
 			jugada = n;
 		}
@@ -136,22 +137,22 @@ int eleccionIA(Ficha **tablero) {
 	}
 
 	cout << "Colocando en error caso" << endl;
-	return -1;
+	return 0;
 }
 bool comprobrobarVictoriaInminente(Ficha **tablero, int jugador, int objetivo) {
-	bool seRealiza = false;
+	bool gana = false;
 	for (int n = 0; n < COLUMNAS; n++) {
 
 		Ficha **posibilidad = clonarTablero(tablero);
 		colocarFicha(posibilidad, jugador, n);
 		if (comprobarVictoria(posibilidad, objetivo) == jugador) {
-			seRealiza = true;
+			gana = true;
 
 		}
 		liberarTablero(posibilidad);
 
 	}
-	return seRealiza;
+	return gana;
 }
 
 int numVictoriaInminente(Ficha **tablero, int jugador, int objetivo) {
