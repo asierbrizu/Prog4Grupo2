@@ -9,6 +9,8 @@
 #ifndef MECANICAS_H_
 #define MECANICAS_H_
 #include "Tablero.h"
+#include "Jugador.h"
+#include "sqlite3.h"
 #include <iostream>
 using namespace std;
 #include <stdbool.h>
@@ -27,6 +29,6 @@ int numeroDeVictorias(Ficha **tablero, int objetivo);
 char menuInicio();
 char inicioSesion();
 void clearIfNeeded(char *str, int max_line);
-void jugarPartida(Ficha **tablero, bool IA);
+void jugarPartida(Ficha **tablero, bool IA, Jugador jugador, Jugador jugador2, sqlite3 *db);
 bool empate(Ficha **tablero);
 #endif /* MECANICAS_H_ */

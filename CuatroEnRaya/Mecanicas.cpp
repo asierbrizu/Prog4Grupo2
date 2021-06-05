@@ -7,6 +7,8 @@
  */
 
 #include "Mecanicas.h"
+#include "Jugador.h"
+#include "BD.h"
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -204,7 +206,9 @@ bool empate(Ficha **tablero) {
 	return true;
 }
 
-void jugarPartida(Ficha **tablero, bool contraIA) {
+void jugarPartida(Ficha **tablero, bool contraIA, Jugador jugador, Jugador jugador2, sqlite3 *db) {
+	BD bd;
+
 	limpiar(tablero);
 	bool juegaJug1 = true;
 	int numeroJug;
@@ -251,6 +255,12 @@ void jugarPartida(Ficha **tablero, bool contraIA) {
 	if (!empate(tablero)) {
 		cout << "Ha ganado el jugador " << comprobarVictoria(tablero, OBJETIVO)
 				<< ". Felicidades!\n" << endl;
+		if (comprobarVictoria(tablero, OBJETIVO) == 1) {
+			int result =bd.sumarVictoria(db, jugador);
+
+		} else if (comprobarVictoria(tablero, OBJETIVO) == 2) {
+			int result = bd.sumarVictoria(db, jugador2);
+		}
 	} else {
 		cout << "Habeis empatado." << endl;
 	}
