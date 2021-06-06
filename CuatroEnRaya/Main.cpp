@@ -108,6 +108,26 @@ int main(int argc, char **argv) {
 					case '1':
 						//Se pide que el jugador 2 inicie sesión
 
+						cout << "\nEscribe tu correo electrónico:\n" << endl;
+						char inicioUsuario2[30];
+						cin >> inicioUsuario2;
+
+						cout << "\nEscribe tu contraseña:\n" << endl;
+						char inicioContraseya2[30];
+						cin >> inicioContraseya2;
+
+						jugador2.setEMail(inicioUsuario2);
+						jugador2.setContrasenya(inicioContraseya2);
+
+						result = bd.confirmarUsuario(db, jugador2);
+
+						if (result != SQLITE_OK) {
+							printf("This isn't your account\n");
+							printf("%s\n", sqlite3_errmsg(db));
+							return result;
+						}
+
+						cout << "Sesion iniciada" << endl;
 
 						bd.sumarPartida(db, jugador);
 						bd.sumarPartida(db, jugador2);
