@@ -9,18 +9,16 @@
 #ifndef FICHA_H_
 #define FICHA_H_
 
-class Ficha{
+class Ficha {
 private:
-		int tipo;
+	int tipo;
 public:
-		Ficha();
-		Ficha(int tipo);
-		~Ficha();
+	Ficha();
+	Ficha(int tipo);
+	~Ficha();
 
-		int getTipo();
-		void setTipo(int tipo);
+	int getTipo();
+	void setTipo(int tipo);
 };
-
-
 
 #endif /* FICHA_H_ */

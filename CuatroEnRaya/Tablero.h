@@ -10,8 +10,8 @@
 #define TABLERO_H_
 
 #include "Ficha.h"
-const int COLUMNAS=7;//Estandar: 7
-const int FILAS=6;//Estandar: 6
+const int COLUMNAS = 7; //Estandar: 7
+const int FILAS = 6; //Estandar: 6
 #define SIMBOLO1 'O';
 #define SIMBOLO2 'X';
 

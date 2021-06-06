@@ -6,21 +6,19 @@
  */
 
 #include "Ficha.h"
-Ficha::Ficha(){
-this->tipo=0;
+Ficha::Ficha() {
+	this->tipo = 0;
 }
-Ficha::Ficha(int tipo){
-this->tipo=tipo;
+Ficha::Ficha(int tipo) {
+	this->tipo = tipo;
 }
-Ficha::~Ficha(){
+Ficha::~Ficha() {
 }
-int Ficha::getTipo(){
-return tipo;
-}
-
-
-void Ficha::setTipo(int tipo){
-	this->tipo=tipo;
+int Ficha::getTipo() {
+	return tipo;
 }
 
+void Ficha::setTipo(int tipo) {
+	this->tipo = tipo;
+}
 

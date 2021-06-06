@@ -14,241 +14,189 @@
 using namespace std;
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
-   int i;
-   for(i = 0; i<argc; i++) {
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-   }
-   printf("\n");
-   return 0;
+	int i;
+	for (i = 0; i < argc; i++) {
+		printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+	}
+	printf("\n");
+	return 0;
 }
 
-bool existeUsuario(sqlite3 *db, Jugador j){
-	const char* data = "Callback function called";
-	char *zErrMsg = 0;
-
-		sqlite3_stmt *stmt;
-
-		string email = j.getEMail();
-
-
-
-		string comando = "SELECT * FROM usuario WHERE email='"+email+"';";
-		char sql[comando.length() + 1];
-			strcpy(sql, comando.c_str());
-
-			cout << sql<< endl;
-			int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-				if(result != SQLITE_OK)
-				{
-					cout<<"Error preparing statement (INSERT)\n"<<endl;
-					cout<< sqlite3_errmsg(db)<<endl;
-					return result;
-				}
-
-
-
-				result = sqlite3_step(stmt);
-				while(result == SQLITE_ROW)
-				{
-
-					return true;
-
-				}
-				return false;
-}
-int crearUsuario(sqlite3 *db, Jugador j){
-	const char* data = "Callback function called";
+bool existeUsuario(sqlite3 *db, Jugador j) {
+	const char *data = "Callback function called";
 	char *zErrMsg = 0;
 
 	sqlite3_stmt *stmt;
 
 	string email = j.getEMail();
-	string contraseya = j.getContrasenya();
 
-	cout<<"\n" << email << endl;
-	cout<< contraseya<<endl;
-
-	if(existeUsuario(db, j)){
-	string comando = "INSERT INTO usuario (email, contraseya) VALUES ('"+ email + "', '"+ contraseya +"')";
-
-
-
+	string comando = "SELECT * FROM usuario WHERE email='" + email + "';";
 	char sql[comando.length() + 1];
 	strcpy(sql, comando.c_str());
-
-	cout << sql<< endl;
-
-	int result = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
-	if (result != SQLITE_OK) {
-		cout<<"Error preparing statement (INSERT)\n"<<endl;
-		cout<< sqlite3_errmsg(db)<<endl;
-		return result;
-		fprintf(stderr, "SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-	}
-
-	cout<<"ss"<<endl;
-
-	string comando2 = "INSERT INTO estadistica VALUES ('"+ email + "', 0, 0)";
-
-	char sql2[comando2.length() + 1];
-	strcpy(sql2, comando2.c_str());
-
-	cout << sql2<< endl;
-
-	result = sqlite3_exec(db, sql2, callback, (void*)data, &zErrMsg);
-	if (result != SQLITE_OK) {
-		cout<<"Error preparing statement (INSERT)\n"<<endl;
-		cout<< sqlite3_errmsg(db)<<endl;
-		return result;
-		fprintf(stderr, "SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-	}
-	return result;
-	}else{
-		cout<<"El usuario introducido ya esta en la base de datos"<<endl;
-	}
-	cout<<"Prepared statement finalized (INSERT)\n"<<endl;
-		return 0;
-}
-
-bool confirmarUsuario(sqlite3 *db, Jugador j){
-	/*const char* data = "Callback function called";
-	char *zErrMsg = 0;*/
-
-	sqlite3_stmt *stmt;
-
-	string email = j.getEMail();
-	string contraseya = j.getContrasenya();
-
-	cout<<"\n" << email << endl;
-
-	string comando = "SELECT email, contraseya FROM usuario WHERE (email = '"+ email + "' AND contraseya = '"+ contraseya +"')";
-
-	char sql[comando.length() + 1];
-	strcpy(sql, comando.c_str());
-
-	cout << sql<< endl;
-	/*int result = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
-	if (result != SQLITE_OK) {
-		cout<<"Error preparing statement (INSERT)\n"<<endl;
-		cout<< sqlite3_errmsg(db)<<endl;
-		return result;
-		fprintf(stderr, "SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-	}
-	*/
-
-	//sqlite3_stmt *stmt = NULL;
 
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-	if(result != SQLITE_OK)
-	{
-		cout<<"Error preparing statement (INSERT)\n"<<endl;
-		cout<< sqlite3_errmsg(db)<<endl;
-		return result;
+	if (result != SQLITE_OK) {
+		cout << "Error preparing statement (INSERT)\n" << endl;
+		cout << sqlite3_errmsg(db) << endl;
+
 	}
 
-
-
 	result = sqlite3_step(stmt);
-	while(result == SQLITE_ROW)
-	{
+	while (result == SQLITE_ROW) {
+
 		return true;
 
+	}
+
+	return false;
+}
+int crearUsuario(sqlite3 *db, Jugador j) {
+	const char *data = "Callback function called";
+	char *zErrMsg = 0;
+
+	sqlite3_stmt *stmt;
+
+	string email = j.getEMail();
+	string contraseya = j.getContrasenya();
+
+	if (!existeUsuario(db, j)) {
+		string comando = "INSERT INTO usuario (email, contraseya) VALUES ('"
+				+ email + "', '" + contraseya + "')";
+
+		char sql[comando.length() + 1];
+		strcpy(sql, comando.c_str());
+
+		int result = sqlite3_exec(db, sql, callback, (void*) data, &zErrMsg);
+		if (result != SQLITE_OK) {
+			cout << "Error preparing statement (INSERT)\n" << endl;
+			cout << sqlite3_errmsg(db) << endl;
+			return result;
+			fprintf(stderr, "SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+		}
+
+		string comando2 = "INSERT INTO estadistica VALUES ('" + email
+				+ "', 0, 0)";
+
+		char sql2[comando2.length() + 1];
+		strcpy(sql2, comando2.c_str());
+
+		result = sqlite3_exec(db, sql2, callback, (void*) data, &zErrMsg);
+		if (result != SQLITE_OK) {
+			cout << "Error preparing statement (INSERT)\n" << endl;
+			cout << sqlite3_errmsg(db) << endl;
+			return result;
+			fprintf(stderr, "SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+		}
+		return result;
+	} else {
+		cout << "El usuario introducido ya esta en la base de datos" << endl;
+	}
+
+	return 0;
+}
+
+bool confirmarUsuario(sqlite3 *db, Jugador j) {
+	sqlite3_stmt *stmt;
+
+	string email = j.getEMail();
+	string contraseya = j.getContrasenya();
+
+	string comando = "SELECT email, contraseya FROM usuario WHERE (email = '"
+			+ email + "' AND contraseya = '" + contraseya + "')";
+
+	char sql[comando.length() + 1];
+	strcpy(sql, comando.c_str());
+
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	if (result != SQLITE_OK) {
+		cout << "Error preparing statement (INSERT)\n" << endl;
+		cout << sqlite3_errmsg(db) << endl;
+
+	}
+
+	result = sqlite3_step(stmt);
+	while (result == SQLITE_ROW) {
+		return true;
 
 	}
 	return false;
 }
 
-int mostrarEstadisticas(sqlite3 *db, Jugador j){
-	const char* data = "Callback function called";
+int mostrarEstadisticas(sqlite3 *db, Jugador j) {
+	const char *data = "Callback function called";
 	char *zErrMsg = 0;
 
 	sqlite3_stmt *stmt;
 
 	string email = j.getEMail();
 
-	cout<<"\n" << email << endl;
-
-	string comando = "SELECT partidasJugadas, partidasGanadas FROM estadistica WHERE email = '"+ email + "'";
+	string comando =
+			"SELECT partidasJugadas, partidasGanadas FROM estadistica WHERE email = '"
+					+ email + "'";
 
 	char sql[comando.length() + 1];
 	strcpy(sql, comando.c_str());
 
-	cout << sql<< endl;
-
-	int result = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	int result = sqlite3_exec(db, sql, callback, (void*) data, &zErrMsg);
 	if (result != SQLITE_OK) {
-		cout<<"Error preparing statement (INSERT)\n"<<endl;
-		cout<< sqlite3_errmsg(db)<<endl;
+		cout << "Error preparing statement (INSERT)\n" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 		return result;
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	}
 
-	if(result == SQLITE_ROW){
-
-		cout << "funciona" << endl;
-	}
-
-
-	cout<<"Prepared statement finalized (STADISTIC)\n"<<endl;
 	return result;
 
 }
-int sumarVictoria(sqlite3 *db, Jugador j){
-	const char* data = "Callback function called";
+int sumarVictoria(sqlite3 *db, Jugador j) {
+	const char *data = "Callback function called";
 	char *zErrMsg = 0;
 
 	string email = j.getEMail();
 
-	cout<<"\n" << email << endl;
-
-	string comando = "UPDATE estadistica SET partidasGanadas = partidasGanadas + 1 WHERE email = '"+ email + "'";
+	string comando =
+			"UPDATE estadistica SET partidasGanadas = partidasGanadas + 1 WHERE email = '"
+					+ email + "'";
 
 	char sql[comando.length() + 1];
 	strcpy(sql, comando.c_str());
 
-	cout << sql<< endl;
-
-	int result = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	int result = sqlite3_exec(db, sql, callback, (void*) data, &zErrMsg);
 	if (result != SQLITE_OK) {
-		cout<<"Error preparing statement (INSERT)\n"<<endl;
-		cout<< sqlite3_errmsg(db)<<endl;
+		cout << "Error preparing statement (INSERT)\n" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 		return result;
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	}
 
-	cout<<"Prepared statement finalized (UPDATE VICTORY)\n"<<endl;
 	return result;
 }
 
-int sumarPartida(sqlite3 *db, Jugador j){
-	const char* data = "Callback function called";
+int sumarPartida(sqlite3 *db, Jugador j) {
+	const char *data = "Callback function called";
 	char *zErrMsg = 0;
 
 	string email = j.getEMail();
 
-	cout<<"\n" << email << endl;
-
-	string comando = "UPDATE estadistica SET partidasJugadas = partidasJugadas + 1 WHERE email = '"+ email + "'";
+	string comando =
+			"UPDATE estadistica SET partidasJugadas = partidasJugadas + 1 WHERE email = '"
+					+ email + "'";
 
 	char sql[comando.length() + 1];
 	strcpy(sql, comando.c_str());
 
-	cout << sql<< endl;
-
-	int result = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+	int result = sqlite3_exec(db, sql, callback, (void*) data, &zErrMsg);
 	if (result != SQLITE_OK) {
-		cout<<"Error preparing statement (INSERT)\n"<<endl;
-		cout<< sqlite3_errmsg(db)<<endl;
+		cout << "Error preparing statement (INSERT)\n" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 		return result;
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	}
 
-	cout<<"Prepared statement finalized (UPDATE VICTORY)\n"<<endl;
 	return result;
 }

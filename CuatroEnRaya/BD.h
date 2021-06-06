@@ -13,12 +13,11 @@
 #include <stdbool.h>
 #include <string>
 
-		int crearUsuario(sqlite3 *db,Jugador j);
-		bool confirmarUsuario(sqlite3 *db, Jugador j);
-		int mostrarEstadisticas(sqlite3 *db, Jugador j);
-		int sumarVictoria(sqlite3 *db, Jugador j);
-		int sumarPartida(sqlite3 *db, Jugador j);
-		bool existeUsuario(sqlite3 *db, Jugador j);
-
+int crearUsuario(sqlite3 *db, Jugador j);
+bool confirmarUsuario(sqlite3 *db, Jugador j);
+int mostrarEstadisticas(sqlite3 *db, Jugador j);
+int sumarVictoria(sqlite3 *db, Jugador j);
+int sumarPartida(sqlite3 *db, Jugador j);
+bool existeUsuario(sqlite3 *db, Jugador j);
 
 #endif /* BD_H_ */

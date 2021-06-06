@@ -26,17 +26,15 @@ int eleccionIA(Ficha **tablero) {
 
 	//1. Comprueba victoria inminente para IA.
 	if (comprobrobarVictoriaInminente(tablero, 2, OBJETIVO)) {
-		cout << "Colocando en primer caso" << endl;
 		return numVictoriaInminente(tablero, 2, OBJETIVO);
 	}
 
-//2. Impide victoria inminente para Jugador.
+	//2. Impide victoria inminente para Jugador.
 	if (comprobrobarVictoriaInminente(tablero, 1, OBJETIVO)) {
-		cout << "Colocando en segundo caso" << endl;
 		return numVictoriaInminente(tablero, 1, OBJETIVO);
 	}
 
-//3. Comprueba victorias próximas para IA.
+	//3. Comprueba victorias próximas para IA.
 	for (int n = 0; n < COLUMNAS; n++) {
 		bool seRealiza = false;
 		int jugada = -1;
@@ -49,12 +47,6 @@ int eleccionIA(Ficha **tablero) {
 				colocarFicha(posibilidad, 1,
 						numVictoriaInminente(posibilidad, 2, OBJETIVO));
 				if (comprobrobarVictoriaInminente(posibilidad, 2, OBJETIVO)) {
-					cout << "Se cree que si IA pone en " << n
-							<< "(columnas 0-7), entonces jugador tendría que poner en "
-							<< jugadaJugador
-							<< ", lo que hace que cuando IA pone en "
-							<< numVictoriaInminente(posibilidad, 2, OBJETIVO)
-							<< " gana la partida." << endl;
 					seRealiza = true;
 					jugada = n;
 				}
@@ -63,13 +55,11 @@ int eleccionIA(Ficha **tablero) {
 
 		liberarTablero(posibilidad);
 		if (seRealiza) {
-			cout << "Colocando en tercer caso" << endl;
 			return jugada;
 		}
 	}
 
-//4 Intentar alinear 3
-
+	//4 Intentar alinear 3
 	for (int n = 0; n < COLUMNAS; n++) {
 		Ficha **posibilidad = clonarTablero(tablero);
 		bool seRealiza = false;
@@ -86,12 +76,11 @@ int eleccionIA(Ficha **tablero) {
 		}
 		liberarTablero(posibilidad);
 		if (seRealiza) {
-			cout << "Colocando en cuarto caso" << endl;
 			return jugada;
 		}
 	}
 
-//5 Evitar alinear 3
+	//5 Evitar alinear 3
 	for (int n = 0; n < COLUMNAS; n++) {
 		Ficha **posibilidad = clonarTablero(tablero);
 		bool seRealiza = false;
@@ -104,39 +93,34 @@ int eleccionIA(Ficha **tablero) {
 
 		if (masAlineaciones
 				&& !comprobrobarVictoriaInminente(posibilidad, 1, OBJETIVO)
-				&& !derrotaProxima(tablero, n)
-				&& !existePeligro(tablero, n)) {
+				&& !derrotaProxima(tablero, n) && !existePeligro(tablero, n)) {
 			seRealiza = true;
 			jugada = n;
 		}
 		liberarTablero(posibilidad);
 		if (seRealiza) {
-			cout << "Colocando en quinto caso" << endl;
 			return jugada;
 		}
 	}
 
-//6. Evita victorias próximas para Jugador.
+	//6. Evita victorias próximas para Jugador.
 	srand(time(NULL));
 	for (int c = 0; c < COLUMNAS * 10; c++) {
 
 		int n = rand() % COLUMNAS;
 
 		if (!existePeligro(tablero, n) && filaLibre(tablero, n) < FILAS) {
-			cout << "Colocando en sexto caso" << endl;
 			return n;
 		}
 	}
 
-//7 Jugada desesperada
+	//7 Jugada desesperada
 	for (int libre = 0; libre < COLUMNAS; libre++) {
 		if (filaLibre(tablero, libre) < FILAS) {
-			cout << "Colocando en septimo caso" << endl;
 			return libre;
 		}
 	}
 
-	cout << "Colocando en error caso" << endl;
 	return 0;
 }
 bool comprobrobarVictoriaInminente(Ficha **tablero, int jugador, int objetivo) {
@@ -186,27 +170,22 @@ bool derrotaProxima(Ficha **tablero, int jugada) {
 }
 bool existePeligro(Ficha **tablero, int jugada) {
 
-	cout << "Iniciando comprobación de peligro en jugada " << jugada << endl;
 	bool seRealiza = true;
 	Ficha **posibilidad = clonarTablero(tablero);
 	colocarFicha(posibilidad, 2, jugada);
 
 	if (!comprobrobarVictoriaInminente(posibilidad, 1, OBJETIVO)) {
-		cout
-				<< "Se ha comprobado que no hay victoria inminente al colocarla ahi"
-				<< endl;
-		cout << "Se van a realizar simulaciones" << endl;
+
 		for (int m = 0; m < COLUMNAS; m++) {
-			cout << "Simulacion de la columna " << m << endl;
+
 			Ficha **posibilidad2 = clonarTablero(posibilidad);
 			colocarFicha(posibilidad2, 1, m);
 			if (comprobrobarVictoriaInminente(posibilidad2, 1, OBJETIVO)) {
-				cout << "Habia victoria inminente para Jugador" << endl;
+
 				colocarFicha(posibilidad2, 2,
 						numVictoriaInminente(posibilidad2, 1, OBJETIVO));
 				if (comprobrobarVictoriaInminente(posibilidad2, 1, OBJETIVO)) {
-					cout << "Colocar ficha no habria resuelto el problema"
-							<< endl;
+
 					seRealiza = false;
 				}
 			}
@@ -215,19 +194,11 @@ bool existePeligro(Ficha **tablero, int jugada) {
 
 		}
 	} else {
-		cout
-				<< "Se ha comprobado que con la jugada habia victoria inminente para Jugador"
-				<< endl;
+
 		seRealiza = false;
 	}
 
 	liberarTablero(posibilidad);
-	if (seRealiza) {
-		cout << "Se determina que la jugada NO es peligrosa" << endl;
-	} else {
-
-		cout << "Se determina que la jugada SI es peligrosa" << endl;
-	}
 
 	return !seRealiza;
 

@@ -9,17 +9,17 @@
 #ifndef JUGADOR_H_
 #define JUGADOR_H_
 
-class Jugador{
+class Jugador {
 private:
 	char *email;
 	char *contraseya;
 public:
 	Jugador();
-	Jugador(char *email,char *contrasenya);
+	Jugador(char *email, char *contrasenya);
 	~Jugador();
 
-	char *getEMail();
-	char *getContrasenya();
+	char* getEMail();
+	char* getContrasenya();
 
 	void setEMail(char *mail);
 	void setContrasenya(char *contra);

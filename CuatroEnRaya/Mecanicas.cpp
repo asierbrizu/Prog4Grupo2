@@ -171,23 +171,24 @@ int numeroDeVictorias(Ficha **tablero, int objetivo) {
 }
 
 char inicioSesion() {
-	cout << "\n1. Registrarse\n" << endl;
-	cout << "\n2. Iniciar sesión\n" << endl;
-	cout << "\n9. Salir\n" << endl;
+	cout << "1. Registrarse" << endl;
+	cout << "2. Iniciar sesión" << endl;
+	cout << "9. Salir" << endl;
 	cout << "\n" << endl;
 	cout << "Opción: " << endl;
 
-	char linea[2];
+	char linea;
 	cin >> linea;
 
-	return *linea;
+	return linea;
 }
 
-char menuInicio() {
-	cout << "\n1. Jugar partida\n" << endl;
-	cout << "2. Ver estadisticas\n" << endl;
 
-	cout << "9. Para salir\n" << endl;
+
+char menuInicio() {
+	cout << "1. Jugar partida" << endl;
+	cout << "2. Ver estadisticas" << endl;
+	cout << "9. Para salir" << endl;
 	cout << "\n" << endl;
 	cout << "Opción: " << endl;
 
@@ -252,19 +253,17 @@ void jugarPartida(Ficha **tablero, bool contraIA, Jugador jugador, Jugador jugad
 	} while (comprobarVictoria(tablero, OBJETIVO) == 0 && !empate(tablero));
 	visualizarTablero(tablero);
 	if (comprobarVictoria(tablero, OBJETIVO) != 0) {
-		cout << "Ha ganado el jugador " << comprobarVictoria(tablero, OBJETIVO)
-				<< ". Felicidades!\n" << endl;
+
 		if (comprobarVictoria(tablero, OBJETIVO) == 1) {
 			sumarVictoria(db, jugador);
+			cout << "Has ganado " << jugador.getEMail()	<< ". Felicidades!\n" << endl;
 
 		} else if (comprobarVictoria(tablero, OBJETIVO) == 2) {
 			sumarVictoria(db, jugador2);
+			cout << "Has ganado " << jugador2.getEMail()	<< ". Felicidades!\n" << endl;
 		}
 	} else {
-		cout << "Parece que empatan, ha ganado"<<comprobarVictoria(tablero, OBJETIVO)<<endl;
 		cout << "Habeis empatado." << endl;
 	}
 
-	//Mostrar nickname de jugador ganador
-//Aqui hay que actualizar las estadisticas de las BDs
 }

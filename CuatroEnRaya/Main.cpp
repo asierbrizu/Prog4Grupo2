@@ -12,13 +12,12 @@
 #include <iostream>
 using namespace std;
 
-
 int main(int argc, char **argv) {
 
 	Jugador IA;
 	Jugador jugador2;
 
-	IA.setEMail("IA");
+	IA.setEMail("VictorIA");
 	IA.setContrasenya("Invencible");
 
 	int result;
@@ -26,12 +25,10 @@ int main(int argc, char **argv) {
 	sqlite3 *db;
 
 	result = sqlite3_open("BD.sqlite", &db);
-	if(result != SQLITE_OK){
+	if (result != SQLITE_OK) {
 		printf("Error opening database\n");
 		return result;
 	}
-
-			printf("Database opened\n");
 
 	Jugador jugador;
 
@@ -72,17 +69,13 @@ int main(int argc, char **argv) {
 
 			}
 
-			cout << "Este es tu usuario " << usuario
-					<< " y esta es tu contraseña " << contraseya << ".";
-
 			jugador.setEMail(usuario);
 			jugador.setContrasenya(contraseya);
 
-			//Aqui hay que crear el usuario en la Base de Datos
 
 			result = crearUsuario(db, jugador);
 
-			cout<< "Usuario guardado" <<endl;
+			cout << "Usuario guardado" << endl;
 
 			if (result != SQLITE_OK) {
 				printf("Error creating Usuario\n");
@@ -104,7 +97,6 @@ int main(int argc, char **argv) {
 
 					switch (opcionOponente) {
 					case '1':
-						//Se pide que el jugador 2 inicie sesión
 
 						cout << "\nEscribe tu correo electrónico:\n" << endl;
 						char inicioUsuario2[30];
@@ -130,14 +122,14 @@ int main(int argc, char **argv) {
 						sumarPartida(db, jugador);
 						sumarPartida(db, jugador2);
 
-						jugarPartida(tablero, false, jugador, jugador2, db); //Pendiente cambiar parametros para recibir dos usuarios
+						jugarPartida(tablero, false, jugador, jugador2, db);
 						break;
 
 					case '2':
 						sumarPartida(db, jugador);
 						sumarPartida(db, IA);
 
-						jugarPartida(tablero, true, jugador, IA, db); //Pendiente cambiar parametros para recibir dos usuarios (el segundo la IA)
+						jugarPartida(tablero, true, jugador, IA, db);
 						break;
 					}
 
@@ -167,7 +159,7 @@ int main(int argc, char **argv) {
 
 			break;
 		case '2':
-			//Aqui hay que iniciar sesión (y crear una)
+
 
 			cout << "\nEscribe tu correo electrónico:\n" << endl;
 			char inicioUsuario[30];
@@ -203,20 +195,19 @@ int main(int argc, char **argv) {
 
 					switch (opcionOponente) {
 					case '1':
-						//Se pide que el jugador 2 inicie sesión
 
 
 						sumarPartida(db, jugador);
 						sumarPartida(db, jugador2);
 
-						jugarPartida(tablero, false, jugador, jugador2, db); //Pendiente cambiar parametros para recibir dos usuarios
+						jugarPartida(tablero, false, jugador, jugador2, db);
 						break;
 
 					case '2':
 						sumarPartida(db, jugador);
 						sumarPartida(db, IA);
 
-						jugarPartida(tablero, true, jugador, IA, db); //Pendiente cambiar parametros para recibir dos usuarios (el segundo la IA)
+						jugarPartida(tablero, true, jugador, IA, db);
 						break;
 					}
 
@@ -247,11 +238,11 @@ int main(int argc, char **argv) {
 			break;
 		default:
 			result = sqlite3_close(db);
-			if (result != SQLITE_OK){
+			if (result != SQLITE_OK) {
 				printf("Error closing database\n");
 				return result;
 			}
-			printf("Database closed\n");
+
 			break;
 		}
 	} while (sesion != '9');

@@ -5,30 +5,29 @@
  *      Author: Asier
  */
 #include "Jugador.h"
-Jugador::Jugador(){
-	this->email="";
-	this->contraseya="";
+Jugador::Jugador() {
+	this->email = "";
+	this->contraseya = "";
 }
-Jugador::Jugador(char *email,char *contrasenya){
-this->email=email;
-this->contraseya=contrasenya;
+Jugador::Jugador(char *email, char *contrasenya) {
+	this->email = email;
+	this->contraseya = contrasenya;
 }
-Jugador::~Jugador(){
+Jugador::~Jugador() {
 
 }
 
-	char* Jugador::getEMail(){
-return email;
-	}
-	char* Jugador::getContrasenya(){
-return contraseya;
-	}
+char* Jugador::getEMail() {
+	return email;
+}
+char* Jugador::getContrasenya() {
+	return contraseya;
+}
 
-	void Jugador::setEMail(char *mail){
-		this->email=mail;
-	}
-	void Jugador::setContrasenya(char *contra){
-this->contraseya=contra;
-	}
-
+void Jugador::setEMail(char *mail) {
+	this->email = mail;
+}
+void Jugador::setContrasenya(char *contra) {
+	this->contraseya = contra;
+}
 

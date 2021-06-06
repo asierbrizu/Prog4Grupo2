@@ -24,27 +24,27 @@ char obtenerSimbolo(int num) {
 }
 
 void visualizarTablero(Ficha **tablero) {
-	for(int n=0;n<COLUMNAS*2 +1;n++){
-		cout<<"-";
+	for (int n = 0; n < COLUMNAS * 2 + 1; n++) {
+		cout << "-";
 	}
-	cout<<endl;
-	for(int n=0;n<COLUMNAS;n++){
-			cout<<" "<<n+1;
-		}
-		cout<<endl;
+	cout << endl;
+	for (int n = 0; n < COLUMNAS; n++) {
+		cout << " " << n + 1;
+	}
+	cout << endl;
 	int j;
-	for (j = FILAS-1; j >= 0; j--) {
+	for (j = FILAS - 1; j >= 0; j--) {
 		int i;
-		cout<<"|";
-		for (i = 0; i <= COLUMNAS-1; i++) {
-			cout<<obtenerSimbolo(tablero[i][j].getTipo())<<"|";
+		cout << "|";
+		for (i = 0; i <= COLUMNAS - 1; i++) {
+			cout << obtenerSimbolo(tablero[i][j].getTipo()) << "|";
 		}
-		cout<<endl;
+		cout << endl;
 	}
-	for(int n=0;n<COLUMNAS*2 +1;n++){
-			cout<<"-";
-		}
-		cout<<endl;
+	for (int n = 0; n < COLUMNAS * 2 + 1; n++) {
+		cout << "-";
+	}
+	cout << endl;
 }
 
 void limpiar(Ficha **tablero) {
