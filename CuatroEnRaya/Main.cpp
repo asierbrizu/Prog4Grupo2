@@ -119,7 +119,7 @@ int main(int argc, char **argv) {
 
 						result = confirmarUsuario(db, jugador2);
 
-						if (result != SQLITE_OK) {
+						if (!result) {
 							printf("This isn't your account\n");
 							printf("%s\n", sqlite3_errmsg(db));
 							return result;
@@ -182,7 +182,7 @@ int main(int argc, char **argv) {
 
 			result = confirmarUsuario(db, jugador);
 
-			if (result != SQLITE_OK) {
+			if (!result) {
 				printf("This isn't your account\n");
 				printf("%s\n", sqlite3_errmsg(db));
 				return result;

@@ -22,7 +22,40 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
    return 0;
 }
 
+bool existeUsuario(sqlite3 *db, Jugador j){
+	const char* data = "Callback function called";
+	char *zErrMsg = 0;
 
+		sqlite3_stmt *stmt;
+
+		string email = j.getEMail();
+
+
+
+		string comando = "SELECT * FROM usuario WHERE email='"+email+"';";
+		char sql[comando.length() + 1];
+			strcpy(sql, comando.c_str());
+
+			cout << sql<< endl;
+			int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+				if(result != SQLITE_OK)
+				{
+					cout<<"Error preparing statement (INSERT)\n"<<endl;
+					cout<< sqlite3_errmsg(db)<<endl;
+					return result;
+				}
+
+
+
+				result = sqlite3_step(stmt);
+				while(result == SQLITE_ROW)
+				{
+
+					return true;
+
+				}
+				return false;
+}
 int crearUsuario(sqlite3 *db, Jugador j){
 	const char* data = "Callback function called";
 	char *zErrMsg = 0;
@@ -35,7 +68,7 @@ int crearUsuario(sqlite3 *db, Jugador j){
 	cout<<"\n" << email << endl;
 	cout<< contraseya<<endl;
 
-
+	if(existeUsuario(db, j)){
 	string comando = "INSERT INTO usuario (email, contraseya) VALUES ('"+ email + "', '"+ contraseya +"')";
 
 
@@ -71,12 +104,15 @@ int crearUsuario(sqlite3 *db, Jugador j){
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
 		sqlite3_free(zErrMsg);
 	}
-	cout<<"Prepared statement finalized (INSERT)\n"<<endl;
 	return result;
-
+	}else{
+		cout<<"El usuario introducido ya esta en la base de datos"<<endl;
+	}
+	cout<<"Prepared statement finalized (INSERT)\n"<<endl;
+		return 0;
 }
 
-int confirmarUsuario(sqlite3 *db, Jugador j){
+bool confirmarUsuario(sqlite3 *db, Jugador j){
 	/*const char* data = "Callback function called";
 	char *zErrMsg = 0;*/
 
@@ -118,12 +154,11 @@ int confirmarUsuario(sqlite3 *db, Jugador j){
 	result = sqlite3_step(stmt);
 	while(result == SQLITE_ROW)
 	{
-		if (sqlite3_column_text(stmt, 0) != NULL && sqlite3_column_text(stmt, 1) != NULL) {
-			return result = SQLITE_OK;
-		}
+		return true;
+
 
 	}
-	return result = SQLITE_NULL;
+	return false;
 }
 
 int mostrarEstadisticas(sqlite3 *db, Jugador j){
