@@ -21,8 +21,6 @@ int main(int argc, char **argv) {
 	IA.setEMail("IA");
 	IA.setContrasenya("Invencible");
 
-	BD bd;
-
 	int result;
 
 	sqlite3 *db;
@@ -82,7 +80,7 @@ int main(int argc, char **argv) {
 
 			//Aqui hay que crear el usuario en la Base de Datos
 
-			result = bd.crearUsuario(db, jugador);
+			result = crearUsuario(db, jugador);
 
 			cout<< "Usuario guardado" <<endl;
 
@@ -119,7 +117,7 @@ int main(int argc, char **argv) {
 						jugador2.setEMail(inicioUsuario2);
 						jugador2.setContrasenya(inicioContraseya2);
 
-						result = bd.confirmarUsuario(db, jugador2);
+						result = confirmarUsuario(db, jugador2);
 
 						if (result != SQLITE_OK) {
 							printf("This isn't your account\n");
@@ -129,15 +127,15 @@ int main(int argc, char **argv) {
 
 						cout << "Sesion iniciada" << endl;
 
-						bd.sumarPartida(db, jugador);
-						bd.sumarPartida(db, jugador2);
+						sumarPartida(db, jugador);
+						sumarPartida(db, jugador2);
 
 						jugarPartida(tablero, false, jugador, jugador2, db); //Pendiente cambiar parametros para recibir dos usuarios
 						break;
 
 					case '2':
-						bd.sumarPartida(db, jugador);
-						bd.sumarPartida(db, IA);
+						sumarPartida(db, jugador);
+						sumarPartida(db, IA);
 
 						jugarPartida(tablero, true, jugador, IA, db); //Pendiente cambiar parametros para recibir dos usuarios (el segundo la IA)
 						break;
@@ -148,7 +146,7 @@ int main(int argc, char **argv) {
 
 					cout << "\nAhora se mostraran las estadisticas:\n" << endl;
 
-					result = bd.mostrarEstadisticas(db, jugador);
+					result = mostrarEstadisticas(db, jugador);
 					if (result != SQLITE_OK) {
 						printf("Error with stadistic\n");
 						printf("%s\n", sqlite3_errmsg(db));
@@ -182,7 +180,7 @@ int main(int argc, char **argv) {
 			jugador.setEMail(inicioUsuario);
 			jugador.setContrasenya(inicioContraseya);
 
-			result = bd.confirmarUsuario(db, jugador);
+			result = confirmarUsuario(db, jugador);
 
 			if (result != SQLITE_OK) {
 				printf("This isn't your account\n");
@@ -208,15 +206,15 @@ int main(int argc, char **argv) {
 						//Se pide que el jugador 2 inicie sesión
 
 
-						bd.sumarPartida(db, jugador);
-						bd.sumarPartida(db, jugador2);
+						sumarPartida(db, jugador);
+						sumarPartida(db, jugador2);
 
 						jugarPartida(tablero, false, jugador, jugador2, db); //Pendiente cambiar parametros para recibir dos usuarios
 						break;
 
 					case '2':
-						bd.sumarPartida(db, jugador);
-						bd.sumarPartida(db, IA);
+						sumarPartida(db, jugador);
+						sumarPartida(db, IA);
 
 						jugarPartida(tablero, true, jugador, IA, db); //Pendiente cambiar parametros para recibir dos usuarios (el segundo la IA)
 						break;
@@ -227,7 +225,7 @@ int main(int argc, char **argv) {
 
 					cout << "\nAhora se mostraran las estadisticas:\n" << endl;
 
-					result = bd.mostrarEstadisticas(db, jugador);
+					result = mostrarEstadisticas(db, jugador);
 					if (result != SQLITE_OK) {
 						printf("Error with stadistic\n");
 						printf("%s\n", sqlite3_errmsg(db));

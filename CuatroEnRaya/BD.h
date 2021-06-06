@@ -12,15 +12,13 @@
 #include "Jugador.h"
 
 
-class BD{
 
-	public:
 		int crearUsuario(sqlite3 *db,Jugador j);
 		int confirmarUsuario(sqlite3 *db, Jugador j);
 		int mostrarEstadisticas(sqlite3 *db, Jugador j);
 		int sumarVictoria(sqlite3 *db, Jugador j);
 		int sumarPartida(sqlite3 *db, Jugador j);
 
-};
+
 
 #endif /* BD_H_ */

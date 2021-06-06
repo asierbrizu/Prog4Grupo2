@@ -23,7 +23,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 }
 
 
-int BD::crearUsuario(sqlite3 *db, Jugador j){
+int crearUsuario(sqlite3 *db, Jugador j){
 	const char* data = "Callback function called";
 	char *zErrMsg = 0;
 
@@ -76,7 +76,7 @@ int BD::crearUsuario(sqlite3 *db, Jugador j){
 
 }
 
-int BD::confirmarUsuario(sqlite3 *db, Jugador j){
+int confirmarUsuario(sqlite3 *db, Jugador j){
 	/*const char* data = "Callback function called";
 	char *zErrMsg = 0;*/
 
@@ -126,7 +126,7 @@ int BD::confirmarUsuario(sqlite3 *db, Jugador j){
 	return result = SQLITE_NULL;
 }
 
-int BD::mostrarEstadisticas(sqlite3 *db, Jugador j){
+int mostrarEstadisticas(sqlite3 *db, Jugador j){
 	const char* data = "Callback function called";
 	char *zErrMsg = 0;
 
@@ -162,7 +162,7 @@ int BD::mostrarEstadisticas(sqlite3 *db, Jugador j){
 	return result;
 
 }
-int BD::sumarVictoria(sqlite3 *db, Jugador j){
+int sumarVictoria(sqlite3 *db, Jugador j){
 	const char* data = "Callback function called";
 	char *zErrMsg = 0;
 
@@ -190,7 +190,7 @@ int BD::sumarVictoria(sqlite3 *db, Jugador j){
 	return result;
 }
 
-int BD::sumarPartida(sqlite3 *db, Jugador j){
+int sumarPartida(sqlite3 *db, Jugador j){
 	const char* data = "Callback function called";
 	char *zErrMsg = 0;
 

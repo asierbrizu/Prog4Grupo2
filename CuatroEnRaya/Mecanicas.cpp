@@ -207,7 +207,6 @@ bool empate(Ficha **tablero) {
 }
 
 void jugarPartida(Ficha **tablero, bool contraIA, Jugador jugador, Jugador jugador2, sqlite3 *db) {
-	BD bd;
 
 	limpiar(tablero);
 	bool juegaJug1 = true;
@@ -252,16 +251,17 @@ void jugarPartida(Ficha **tablero, bool contraIA, Jugador jugador, Jugador jugad
 
 	} while (comprobarVictoria(tablero, OBJETIVO) == 0 && !empate(tablero));
 	visualizarTablero(tablero);
-	if (!empate(tablero)) {
+	if (comprobarVictoria(tablero, OBJETIVO) != 0) {
 		cout << "Ha ganado el jugador " << comprobarVictoria(tablero, OBJETIVO)
 				<< ". Felicidades!\n" << endl;
 		if (comprobarVictoria(tablero, OBJETIVO) == 1) {
-			int result =bd.sumarVictoria(db, jugador);
+			sumarVictoria(db, jugador);
 
 		} else if (comprobarVictoria(tablero, OBJETIVO) == 2) {
-			int result = bd.sumarVictoria(db, jugador2);
+			sumarVictoria(db, jugador2);
 		}
 	} else {
+		cout << "Parece que empatan, ha ganado"<<comprobarVictoria(tablero, OBJETIVO)<<endl;
 		cout << "Habeis empatado." << endl;
 	}
 
